@@ -59,7 +59,6 @@ docs/_build/
 target/
 
 venv
-/venv
-/venv/
 
 .env
+.vscode
