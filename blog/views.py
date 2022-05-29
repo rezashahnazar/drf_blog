@@ -1,8 +1,10 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from .models import Post
 from .seliralizers import PostSerializer
 from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 
 @api_view(['GET'])
@@ -14,6 +16,8 @@ def postsView(request):
 
 
 @api_view(['GET', 'DELETE', 'PUT'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def postView(request, id):
     try:
         result = Post.objects.get(pk=id)
@@ -37,6 +41,8 @@ def postView(request, id):
 
 
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def createPostView(request):
     if request.method == 'POST':
         data = request.data

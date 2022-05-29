@@ -6,6 +6,7 @@ urlpatterns = [
     path('v1/post/', createPostView),
     path('v1/posts/', postsView),
     path('v1/post/<int:id>', postView),
+
     path('v2/posts/', PostsList.as_view()),
     path('v2/post/create', PostCreate.as_view()),
     path('v2/post/<int:id>', PostRetrieveUpdateDestroy.as_view())
