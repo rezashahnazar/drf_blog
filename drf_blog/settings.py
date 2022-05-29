@@ -1,14 +1,14 @@
 from pathlib import Path
 
 import dotenv
-import os
-dotenv.load_dotenv()
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('SECRET_KEY')
+conf = dotenv.dotenv_values(".env")
+SECRET_KEY = conf['SECRET_KEY']
 
-DEBUG = os.getenv('DEBUG')
+DEBUG = conf['DEBUG']
 
 ALLOWED_HOSTS = []
 
@@ -19,6 +19,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'blog.apps.BlogConfig',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
