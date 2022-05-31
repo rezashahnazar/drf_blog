@@ -1,13 +1,13 @@
 from django.urls import path
-from .views import postsView, postView, createPostView
+from .views1 import ListPostView, RetrieveUpdateDestroyPostView, CreatePostView
 from .views2 import PostsList, PostCreate, PostRetrieveUpdateDestroy
 
 urlpatterns = [
-    path('v1/post/', createPostView),
-    path('v1/posts/', postsView),
-    path('v1/post/<int:id>', postView),
+    path('v1/posts/create', CreatePostView),
+    path('v1/posts/list', ListPostView),
+    path('v1/posts/post/<int:id>', RetrieveUpdateDestroyPostView),
 
-    path('v2/posts/', PostsList.as_view()),
-    path('v2/post/create', PostCreate.as_view()),
-    path('v2/post/<int:id>', PostRetrieveUpdateDestroy.as_view())
+    path('v2/posts/create', PostCreate.as_view()),
+    path('v2/posts/list', PostsList.as_view()),
+    path('v2/posts/post/<int:id>', PostRetrieveUpdateDestroy.as_view())
 ]

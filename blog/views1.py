@@ -3,12 +3,12 @@ from rest_framework.response import Response
 from .models import Post
 from .seliralizers import PostSerializer
 from rest_framework import status
-from rest_framework.authentication import TokenAuthentication
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 
 @api_view(['GET'])
-def postsView(request):
+def ListPostView(request):
     if request.method == 'GET':
         result = Post.objects.all()
         serialized_result = PostSerializer(result, many=True)
@@ -16,9 +16,9 @@ def postsView(request):
 
 
 @api_view(['GET', 'DELETE', 'PUT'])
-@authentication_classes([TokenAuthentication])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
 @permission_classes([IsAuthenticated])
-def postView(request, id):
+def RetrieveUpdateDestroyPostView(request, id):
     try:
         result = Post.objects.get(pk=id)
     except Post.DoesNotExist:
@@ -41,11 +41,13 @@ def postView(request, id):
 
 
 @api_view(['POST'])
-@authentication_classes([TokenAuthentication])
+@authentication_classes([SessionAuthentication, BasicAuthentication])
 @permission_classes([IsAuthenticated])
-def createPostView(request):
+def CreatePostView(request):
     if request.method == 'POST':
+        user = request.user.id
         data = request.data
+        data['author'] = user
         serialized_data = PostSerializer(data=data)
         if serialized_data.is_valid():
             serialized_data.save()
